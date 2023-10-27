@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coconut Store</title>
+    <!--  -->
+
+    <!-- tailwind -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
+      integrity="sha512-wnea99uKIC3TJF7v4eKk4Y+lMz2Mklv18+r4na2Gn1abDRPPOeef95xTzdwGD9e6zXJBteMIhZ1+68QC5byJZw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- font awsome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- sweet alert -->
+    <link
+      href="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css
+"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="sweetalert2.min.css" />
+    <!-- gg font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Nosifer&family=Oswald:wght@300;400;500;700&family=Roboto+Slab:wght@100;300;400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- main css -->
+    <link rel="stylesheet" href="/css/index.css" />
+  </head>
+  <body>
+    <header>
+      <div class="mx-auto container-wrapp py-3 container">
+        <div class="flex justify-between align-items-center">
+          <div class="logo_text">
+            <i class="fab fa-phoenix-framework logo-icon"></i> Coconut
+          </div>
+          <div class="navigate">
+            <ul class="nav_header">
+              <li>
+                <a class="active" href="#">Home</a>
+                <a href="#">Admin Page</a>
+                <a onclick="openCart()" href="#"
+                  ><i class="fa fa-shopping-bag nav-icoin">
+                    <span class="span_quantity">0</span></i
+                  ></a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- carousel -->
+    <div class="phone_carousel">
+      <div class="carousel_img">
+        <img src="./img/pexels-torsten-dettlaff-3623358.jpg" alt="" />
+      </div>
+
+      <div class="carousel_content">
+        <h3>New iPhone</h3>
+        <p>Buy Now <i class="fa fa-angle-right"></i></p>
+      </div>
+    </div>
+    <!-- buying area -->
+    <div class="buying_area">
+      <div class="buying_cart">
+        <div class="cart_cater flex container mx-auto">
+          <div class="all_items row-span-1">
+            <p class="text_p">All Models</p>
+          </div>
+          <div class="box">
+            <select id="loaiItems" onchange="filterItems()" class="">
+              <option selected>Selection</option>
+              <option value="all">All</option>
+              <option value="iphone">Iphone</option>
+              <option value="samsung">Samsung</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <!-- display item -->
+      <div
+        id="display_items"
+        class="buying_display-items flex flex-wrap mt-5"
+      ></div>
+    </div>
+
+    <!-- modal cart-->
+    <div class="modal_cart">
+      <div class="modal_container">
+        <div class="modal_top">
+          <table class="table-fixed table w-full text-left">
+            <thead>
+              <tr class="table_row">
+                <th class="w-1/2 first_th pl-5">Tên sản phẩm</th>
+                <th class="w-1/4 pl-5">Số lượng</th>
+                <th class="w-1/4 pl-5">Đơn giá</th>
+                <th class="w-1/4">Thao tác</th>
+              </tr>
+            </thead>
+          </table>
+          <div onclick="closeCart()" class="close_icon">
+            <i class="fa fa-times-circle"></i>
+          </div>
+        </div>
+        <!--  -->
+        <div class="modal_content" id="modal_items-cart"></div>
+        <!-- footer total -->
+        <div class="modal_total">
+          <div class="total_left">Total: <span id="totalPrice">0$</span></div>
+          <div onclick="payFunction()" class="payBtn">
+            <button>Buy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal_background"></div>
+
+    <!-- axios -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"
+      integrity="sha512-emSwuKiMyYedRwflbZB2ghzX8Cw8fmNVgZ6yQNNXXagFzFOaQmbvQ1vmDkddHjm5AITcBIZfC7k4ShQSjgPAmQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <!-- sweet alert -->
+
+    <script src="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js
+"></script>
+    <script src="sweetalert2.all.min.js"></script>
+
+    <!-- main js -->
+    <script type="module" src="./js/index.js"></script>
+  </body>
+</html>
