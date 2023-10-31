@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      value=""
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>ADMIN PAGE</title>
+    <!-- Tailwind CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.0/tailwind.min.css"
+      integrity="sha512-ksC7McuoU4VJ07WGtca5INyDRXzGsmhyEEJYzoWBkjC/KwuG+IK/pFnxJFNIGmOd8pmGexOxd3FziCPZXQJ4lA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- My css -->
+    <link rel="stylesheet" href="../css/index.css" />
+    <style>
+      .modal {
+        transition: opacity 0.25s ease;
+      }
+      body.modal-active {
+        overflow-x: hidden;
+        overflow-y: visible !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="bg-white">
+      <nav
+        class="flex items-center justify-between p-6 mx-auto max-w-7xl lg:px-8"
+        aria-label="Global"
+      >
+        <div class="flex lg:flex-1">
+          <a href="#" class="-m-1.5 p-1.5 flex">
+            <span class="sr-only"></span>
+            <h3 class="p-2">ShopWare</h3>
+            <i class="text-2xl fab fa-shopware"></i>
+          </a>
+        </div>
+        <div class="flex lg:hidden">
+          <button
+            type="button"
+            class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+          >
+            <span class="sr-only">Open main menu</span>
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="hidden lg:flex lg:gap-x-12">
+          <a
+            href="/Website_Page/index.html"
+            class="text-sm font-semibold leading-6 text-gray-900"
+            >Home</a
+          >
+          <div class="relative">
+            <button
+              type="button"
+              class="flex items-center text-sm font-semibold leading-6 text-gray-900 gap-x-1"
+              aria-expanded="false"
+            >
+              Product
+              <svg
+                class="flex-none w-5 h-5 text-gray-400"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <a
+            href="/index.html"
+            class="flex float-left text-sm font-semibold leading-6 text-gray-900"
+            >Website Page
+            <svg
+              class="flex-none w-5 h-5 text-gray-400"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </a>
+
+          <a href="#" class="text-sm font-semibold leading-6 text-gray-900"
+            >Company</a
+          >
+        </div>
+      </nav>
+    </header>
+    <div class="md:container md:mx-auto lg:px-8">
+      <!-- Head management list -->
+      <div class="flex justify-between mt-10 head_List">
+        <h1 class="text-4xl">Sales list management</h1>
+        <div class="left__head">
+          <!-- Add button -->
+          <!-- Product filter -->
+
+          <select
+            id="pricingType"
+            value=""
+            onchange="sortFunc()"
+            name="pricingType"
+            class="h-10 px-2 px-3 py-0 py-1 mx-3 tracking-wider border-2 rounded w-25 border-sky-500 focus:outline-none focus:border-sky-500 text-sky-500"
+          >
+            <option value="All" selected="">All</option>
+            <option value="Low">Low</option>
+            <option value="High">High</option>
+          </select>
+          <button
+            type="button"
+            onclick="toggleModal()"
+            class="text-white bg-green-700 inline hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+          >
+            Add product
+            <i class="ml-1 fa fa-plus"></i>
+          </button>
+          <form style="margin-top: 10px">
+            <label
+              for="default-search"
+              class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+              >Search</label
+            >
+            <div class="relative">
+              <div
+                class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+              >
+                <svg
+                  class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                  />
+                </svg>
+              </div>
+              <input
+                id="default-search"
+                class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Search name"
+                required
+              />
+              <button
+                onclick="searchName()"
+                class="text-white absolute right-2.5 bottom-2.5 bg-green-700 hover:bg-green-800 mt-5 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >
+                Search
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Table content -->
+
+      <div class="relative mt-10 overflow-x-auto">
+        <table
+          class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+        >
+          <thead
+            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+          >
+            <tr>
+              <th scope="col" class="px-6 py-3">ID</th>
+              <th scope="col" class="px-6 py-3">Product name</th>
+              <th scope="col" class="px-6 py-3">Type</th>
+              <th scope="col" class="px-6 py-3">Screen</th>
+              <th scope="col" class="px-6 py-3">Price</th>
+              <th scope="col" class="px-6 py-3">Modify</th>
+            </tr>
+          </thead>
+          <tbody id="tblProduct" class=""></tbody>
+        </table>
+      </div>
+    </div>
+    <!-- Modal -->
+    <div
+      class="fixed top-0 left-0 right-0 flex items-center justify-center opacity-0 pointer-events-none modal"
+    >
+      <div
+        class="absolute w-full h-full bg-gray-900 opacity-50 modal-overlay"
+      ></div>
+
+      <div
+        class="z-50 w-11/12 mx-auto overflow-y-auto bg-white rounded shadow-lg modal-container md:max-w-md"
+      >
+        <div
+          class="absolute top-0 right-0 z-50 flex flex-col items-center mt-4 mr-4 text-sm text-white cursor-pointer modal-close"
+        >
+          <svg
+            class="text-white fill-current"
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 18 18"
+          >
+            <path
+              d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"
+            ></path>
+          </svg>
+          <span class="text-sm">(Esc)</span>
+        </div>
+
+        <!-- Add margin if you want to see some of the overlay behind the modal-->
+        <div class="px-6 py-4 text-left modal-content">
+          <!--Title-->
+          <div class="flex items-center justify-between pb-3">
+            <p class="text-2xl font-bold">Add product !</p>
+            <div class="z-50 cursor-pointer modal-close">
+              <svg
+                class="text-black fill-current"
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+              >
+                <path
+                  d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"
+                ></path>
+              </svg>
+            </div>
+          </div>
+
+          <!--Body-->
+          <br /><label
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            for="pname"
+            >Product name:</label
+          >
+          <input
+            type="text"
+            placeholder="Product name"
+            id="pname"
+            value=""
+            name="pname"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            required
+          />
+          <div id="invalidTen" class="invalid-form"></div>
+          <br /><label
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            for="price"
+            >Price :</label
+          >
+          <input
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            required
+            type="number"
+            placeholder="Price"
+            id="price"
+            value=""
+            name="price"
+          />
+          <div id="invalidGia" class="invalid-form"></div>
+          <br /><label
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            for="screen"
+            >Screen:</label
+          >
+          <input
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            required
+            type="text"
+            id="screen"
+            placeholder="Screen"
+            value=""
+            name="screen"
+          />
+          <br /><label
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            for="backCamera"
+            >Back camera:</label
+          >
+          <input
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            required
+            type="text"
+            id="backCamera"
+            placeholder="Back camera"
+            value=""
+            name="backCamera"
+          />
+          <br /><label
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            for="frontCamera"
+            >Front Camera:</label
+          >
+          <input
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            required
+            type="text"
+            placeholder="Front camera"
+            id="frontCamera"
+            value=""
+            name="frontCamera"
+          />
+          <br /><label
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            for="img"
+            >Image:</label
+          >
+          <input
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            required
+            type="text"
+            id="img"
+            value=""
+            placeholder="Your image"
+            name="img"
+          />
+          <div id="invalidImg" class="invalid-form"></div>
+          <br /><label
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            for="desc"
+            >Description:</label
+          >
+          <input
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            required
+            type="text"
+            id="desc"
+            value=""
+            name="desc"
+            placeholder="Value"
+          />
+          <br />
+          <label
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            for="type"
+            >Type:</label
+          >
+          <select name="type_phone" id="type_phone">
+            <option value="Iphone">Iphone</option>
+            <option value="Samsung">Samsung</option>
+          </select>
+          <!--Footer-->
+          <div class="flex justify-end pt-7">
+            <button
+              class="p-3 px-4 mr-2 text-indigo-500 bg-transparent rounded-lg hover:bg-gray-100 hover:text-indigo-400"
+              onclick="addProd()"
+            >
+              Add
+            </button>
+            <button
+              onclick="updateProd()"
+              class="p-3 px-4 mr-2 text-indigo-500 bg-transparent rounded-lg hover:bg-gray-100 hover:text-indigo-400"
+            >
+              Update
+            </button>
+            <button
+              class="p-3 px-4 text-white bg-indigo-500 rounded-lg modal-close hover:bg-indigo-400"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      var openmodal = document.querySelectorAll(".modal-open");
+      for (var i = 0; i < openmodal.length; i++) {
+        openmodal[i].addEventListener("click", function (event) {
+          event.preventDefault();
+          toggleModal();
+        });
+      }
+
+      const overlay = document.querySelector(".modal-overlay");
+      overlay.addEventListener("click", toggleModal);
+
+      var closemodal = document.querySelectorAll(".modal-close");
+      for (var i = 0; i < closemodal.length; i++) {
+        closemodal[i].addEventListener("click", toggleModal);
+      }
+
+      document.onkeydown = function (evt) {
+        evt = evt || window.event;
+        var isEscape = false;
+        if ("key" in evt) {
+          isEscape = evt.key === "Escape" || evt.key === "Esc";
+        } else {
+          isEscape = evt.keyCode === 27;
+        }
+        if (isEscape && document.body.classList.contains("modal-active")) {
+          toggleModal();
+        }
+      };
+
+      function toggleModal() {
+        const body = document.querySelector("body");
+        const modal = document.querySelector(".modal");
+        modal.classList.toggle("opacity-0");
+        modal.classList.toggle("pointer-events-none");
+        body.classList.toggle("modal-active");
+      }
+    </script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script src="../controller/index.js" type="module"></script>
+  </body>
+</html>
